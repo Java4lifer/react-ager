@@ -9,24 +9,41 @@ function App() {
   const [ nom, setNom ] = useState("")
   const [ age, setAge ] = useState(0)
   const [secDate, setDate] = useState<Date | null>(null)
-
+  
   function calcage() {
-
+    console.log("Hello")
     const cDate = new Date()
     if(secDate == null) {
       console.log("Date null")
       return
     }
-
-    const passedMonth = secDate.getMonth() >= cDate.getMonth()
-    const passedDay = secDate.getDate() >= cDate.getDate()
-    if(passedMonth == true && passedDay == true) {
-      const year = cDate.getFullYear() - secDate.getFullYear()
+    const sameMonth = secDate.getMonth() == cDate.getMonth()
+    const passedMonth = secDate.getMonth() < cDate.getMonth()
+    const passedDay = secDate.getDate() <= cDate.getDate()
+    console.log(passedDay, passedMonth)
+    
+    if(passedMonth == true) {
+      const year1 = cDate.getFullYear()
+      const year2 = secDate.getFullYear()
+      const year = year1 - year2
+      console.log(year)
       setAge(year)
       return
     }
 
-    const year = cDate.getFullYear() - secDate.getFullYear() - 1
+    if(sameMonth == true && passedDay == true) {
+      const year1 = cDate.getFullYear()
+      const year2 = secDate.getFullYear()
+      const year = year1 - year2
+      console.log(year)
+      setAge(year)
+      return
+    }
+
+    const year1 = cDate.getFullYear()
+    const year2 = secDate.getFullYear()
+    const year = year1 - year2 - 1
+    console.log(year)
     setAge(year)
   }
 
@@ -37,18 +54,17 @@ function App() {
 
         <h1 className='title'>Whateth be thy age?</h1>
 
-        <form className='calculator'>
         <div className='input'>
-          <label>Name:</label>
-          <input name='name' required={true} value={nom} onChange={input => setNom(input.target.value)}/>
-          <label>Birth:</label>
-          <DatePicker selected={secDate} onChange={date => setDate(date)} dateFormat="dd/MM/yyyy"/>
+          <label htmlFor='name'>Name:</label>
+          <input id='name' className='inyput' required={true} value={nom} onChange={input => setNom(input.target.value)}/>
+          
+          <label id='sec2' htmlFor='date'>Birth:</label>
+          <DatePicker id="date" className='inyput' maxDate={new Date()} selected={secDate} onChange={date => setDate(date)} dateFormat="dd/MM/yyyy"/>
         </div>
-        
-        <button className='calcthing' onClick={() => calcage}>Calcular idade</button>
-        </form>
 
-        {age !== 0 && <div className='numbercont'><p className='output'>You are {nom} and you are {age} years old.</p></div>}
+        <button className='calcthing' onClick={() => calcage()}>Calcular idade</button>
+
+        {age !== 0 && nom !== '' && <p className='output'>You are {nom} and you are {age} years old.</p>}
       </div>
     </>
   )
