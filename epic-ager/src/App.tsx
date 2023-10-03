@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './App.css'
-import Logo from "./assets/ultradie.jpg"
+import Logo from "./assets/ultradie.png"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
